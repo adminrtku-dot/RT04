@@ -1,3 +1,5 @@
+const SS_ID = "1L8n9LrRMdmy0UyrtelwB_QxIukbMwzsSgm_cjA8FVGo";
+
 /**
  * BACKEND - SISTEM TATA KELOLA RT
  * Copy paste kode ini ke Google Apps Script Editor (Code.gs)
