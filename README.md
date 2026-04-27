@@ -1,9 +1,10 @@
 Panduan Pemasangan Sistem Tata Kelola RT
-​Berikut adalah langkah-langkah mudah untuk menghubungkan User Interface (Frontend) dan Code Backend ke Google Spreadsheet Anda:
-​Langkah 1: Siapkan Google Spreadsheet
-​Buka Google Sheets dan buat dokumen kosong baru.
-​Beri nama file tersebut, misalnya: Database Sistem RT.
-​Buatlah 4 Sheet (Tab di bagian bawah) dengan nama tepat seperti berikut:
+Berikut adalah langkah-langkah mudah untuk menghubungkan User Interface (Frontend) dan Code Backend ke Google Spreadsheet Anda:
+​
+Langkah 1: Siapkan Google Spreadsheet
+​Buka Google Sheets dan buat dokumen kosong baru
+Beri nama file tersebut, misalnya: Database Sistem RT
+Buatlah 4 Sheet (Tab di bagian bawah) dengan nama tepat seperti berikut:
 ​Users
 ​Warga
 ​Kas
