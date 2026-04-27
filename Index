@@ -1,0 +1,410 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tata Kelola RT - Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        /* Loader animation */
+        .loader {
+            border-top-color: transparent;
+            animation: spinner 1s linear infinite;
+        }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- ==================== LOGIN PAGE ==================== -->
+    <div id="login-page" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-600 to-brand-900 p-4 transition-opacity duration-500">
+        <div class="glass-panel w-full max-w-md rounded-2xl shadow-2xl p-8 relative overflow-hidden">
+            <!-- Decorative circle -->
+            <div class="absolute -top-16 -right-16 w-32 h-32 bg-brand-500 rounded-full opacity-20 blur-2xl"></div>
+            
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-100 text-brand-600 mb-4 shadow-inner">
+                    <i class="fa-solid fa-users-rectangle text-2xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-slate-800">Sistem RT Pintar</h1>
+                <p class="text-sm text-slate-500 mt-1">Silakan masuk ke akun Anda</p>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="mb-5 relative">
+                    <label class="block text-sm font-medium text-slate-600 mb-1" for="username">Username</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-user text-slate-400"></i>
+                        </div>
+                        <input type="text" id="username" class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="Masukkan username" required>
+                    </div>
+                </div>
+
+                <div class="mb-6 relative">
+                    <label class="block text-sm font-medium text-slate-600 mb-1" for="password">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-slate-400"></i>
+                        </div>
+                        <input type="password" id="password" class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div id="login-error" class="hidden mb-4 text-sm text-red-500 text-center bg-red-50 py-2 rounded-lg border border-red-100">
+                    Username atau password salah!
+                </div>
+
+                <button type="submit" id="btn-login" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center">
+                    <span id="btn-text">Masuk</span>
+                    <div id="btn-loader" class="hidden w-5 h-5 border-2 border-white rounded-full loader ml-2"></div>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-xs text-slate-400">
+                <p>Gunakan <b class="text-brand-600">admin</b> / <b class="text-brand-600">admin123</b> untuk demo preview.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DASHBOARD PAGE ==================== -->
+    <div id="dashboard-page" class="hidden min-h-screen flex flex-col md:flex-row bg-slate-50 transition-opacity duration-500 opacity-0">
+        
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 bg-white shadow-xl z-10 flex-shrink-0 md:min-h-screen flex flex-col">
+            <div class="p-5 flex items-center justify-between md:justify-center border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid fa-house-chimney"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-slate-800">RT Pintar</span>
+                </div>
+                <button class="md:hidden text-slate-500 hover:text-brand-600" onclick="toggleMobileMenu()">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <nav id="sidebar-nav" class="hidden md:flex flex-col flex-grow p-4 gap-2">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 bg-brand-50 text-brand-600 rounded-xl font-medium transition-colors">
+                    <i class="fa-solid fa-border-all w-5"></i> Dashboard
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-brand-600 rounded-xl font-medium transition-colors">
+                    <i class="fa-solid fa-users w-5"></i> Data Warga
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-brand-600 rounded-xl font-medium transition-colors">
+                    <i class="fa-solid fa-wallet w-5"></i> Keuangan
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:bg-slate-50 hover:text-brand-600 rounded-xl font-medium transition-colors">
+                    <i class="fa-solid fa-file-lines w-5"></i> Surat Pengantar
+                </a>
+                
+                <div class="mt-auto">
+                    <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-xl font-medium transition-colors">
+                        <i class="fa-solid fa-right-from-bracket w-5"></i> Keluar
+                    </button>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-grow p-4 md:p-8 overflow-y-auto">
+            <!-- Header -->
+            <header class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-800">Dashboard</h2>
+                    <p class="text-slate-500" id="welcome-message">Selamat datang kembali, memuat...</p>
+                </div>
+                <div class="flex items-center gap-4 bg-white p-2 pr-4 rounded-full shadow-sm border border-slate-100">
+                    <img src="https://ui-avatars.com/api/?name=Admin+RT&background=0d9488&color=fff" alt="User" class="w-10 h-10 rounded-full">
+                    <div class="text-sm hidden sm:block">
+                        <p class="font-bold text-slate-700" id="user-name-display">Admin RT</p>
+                        <p class="text-slate-400 text-xs">Pengurus</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Cards Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-5 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-sm font-medium">Total Warga</p>
+                        <h3 class="text-2xl font-bold text-slate-800" id="stat-warga">-</h3>
+                        <p class="text-xs text-green-500 mt-1"><i class="fa-solid fa-arrow-up"></i> 2 Kartu Keluarga Baru</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-5 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 rounded-full bg-brand-50 text-brand-500 flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-rupiah-sign"></i>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-sm font-medium">Saldo Kas RT</p>
+                        <h3 class="text-2xl font-bold text-slate-800" id="stat-kas">Rp -</h3>
+                        <p class="text-xs text-slate-400 mt-1">Bulan ini</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex items-center gap-5 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <p class="text-slate-500 text-sm font-medium">Pengumuman Terakhir</p>
+                        <h3 class="text-sm font-bold text-slate-800 truncate mt-1" id="stat-pengumuman">Memuat...</h3>
+                        <p class="text-xs text-slate-400 mt-1">1 hari yang lalu</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Data Warga Table -->
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                        <h3 class="font-bold text-slate-800 text-lg">Mutasi Kas Terakhir</h3>
+                        <button class="text-sm text-brand-600 font-medium hover:underline">Lihat Semua</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-500 text-sm">
+                                    <th class="p-4 font-medium">Tanggal</th>
+                                    <th class="p-4 font-medium">Keterangan</th>
+                                    <th class="p-4 font-medium">Jenis</th>
+                                    <th class="p-4 font-medium text-right">Nominal</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-slate-100" id="table-kas-body">
+                                <tr>
+                                    <td colspan="4" class="p-4 text-center text-slate-400">Memuat data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Quick Actions / Info -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                    <h3 class="font-bold text-slate-800 text-lg mb-4">Aksi Cepat</h3>
+                    <div class="space-y-3">
+                        <button class="w-full flex items-center p-3 rounded-xl border border-slate-100 hover:border-brand-500 hover:bg-brand-50 text-slate-700 transition-colors gap-3">
+                            <div class="bg-brand-100 text-brand-600 p-2 rounded-lg"><i class="fa-solid fa-user-plus w-5"></i></div>
+                            <span class="font-medium text-sm">Tambah Warga Baru</span>
+                        </button>
+                        <button class="w-full flex items-center p-3 rounded-xl border border-slate-100 hover:border-blue-500 hover:bg-blue-50 text-slate-700 transition-colors gap-3">
+                            <div class="bg-blue-100 text-blue-600 p-2 rounded-lg"><i class="fa-solid fa-file-invoice w-5"></i></div>
+                            <span class="font-medium text-sm">Catat Uang Kas</span>
+                        </button>
+                        <button class="w-full flex items-center p-3 rounded-xl border border-slate-100 hover:border-amber-500 hover:bg-amber-50 text-slate-700 transition-colors gap-3">
+                            <div class="bg-amber-100 text-amber-600 p-2 rounded-lg"><i class="fa-solid fa-envelope-open-text w-5"></i></div>
+                            <span class="font-medium text-sm">Buat Surat Pengantar</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-8 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-blue-500 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-800">Bantuan Sistem</h4>
+                                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Data pada sistem ini terhubung langsung dengan Google Spreadsheet Anda secara realtime.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function toggleMobileMenu() {
+            const nav = document.getElementById('sidebar-nav');
+            nav.classList.toggle('hidden');
+            nav.classList.toggle('flex');
+        }
+
+        // FORMAT RUPIAH
+        const formatRupiah = (number) => {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
+        }
+
+        // LOGIN HANDLER
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            // UI States
+            const btnText = document.getElementById('btn-text');
+            const btnLoader = document.getElementById('btn-loader');
+            const errorMsg = document.getElementById('login-error');
+            
+            btnText.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+            errorMsg.classList.add('hidden');
+
+            // Cek apakah dijalankan di Google Apps Script environment
+            if (typeof google !== 'undefined' && google.script) {
+                google.script.run
+                    .withSuccessHandler((res) => processLoginResponse(res, user))
+                    .withFailureHandler((err) => processLoginResponse({success: false, message: "Koneksi ke server gagal!"}))
+                    .checkLogin(user, pass);
+            } else {
+                // SIMULASI UNTUK CANVAS PREVIEW (Jika tidak di dalam Google Apps Script)
+                setTimeout(() => {
+                    if(user === 'admin' && pass === 'admin123') {
+                        processLoginResponse({success: true, nama: 'Bapak Budi (Ketua RT)', role: 'Admin'}, user);
+                    } else {
+                        processLoginResponse({success: false, message: 'Username atau password salah!'}, user);
+                    }
+                }, 1500);
+            }
+        }
+
+        function processLoginResponse(res, username) {
+            const btnText = document.getElementById('btn-text');
+            const btnLoader = document.getElementById('btn-loader');
+            const errorMsg = document.getElementById('login-error');
+
+            btnText.classList.remove('hidden');
+            btnLoader.classList.add('hidden');
+
+            if(res.success) {
+                // Login Berhasil
+                document.getElementById('welcome-message').innerText = `Selamat datang kembali, ${res.nama}`;
+                document.getElementById('user-name-display').innerText = res.nama;
+                
+                // Animasi pindah halaman
+                const loginPage = document.getElementById('login-page');
+                const dashboardPage = document.getElementById('dashboard-page');
+                
+                loginPage.classList.add('opacity-0');
+                setTimeout(() => {
+                    loginPage.classList.add('hidden');
+                    dashboardPage.classList.remove('hidden');
+                    // Trigger reflow
+                    void dashboardPage.offsetWidth;
+                    dashboardPage.classList.remove('opacity-0');
+                    dashboardPage.classList.add('opacity-100');
+                    
+                    loadDashboardData();
+                }, 500);
+
+            } else {
+                // Login Gagal
+                errorMsg.innerText = res.message;
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            const loginPage = document.getElementById('login-page');
+            const dashboardPage = document.getElementById('dashboard-page');
+            
+            dashboardPage.classList.remove('opacity-100');
+            dashboardPage.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                dashboardPage.classList.add('hidden');
+                loginPage.classList.remove('hidden');
+                // Clear inputs
+                document.getElementById('password').value = '';
+                
+                void loginPage.offsetWidth;
+                loginPage.classList.remove('opacity-0');
+            }, 500);
+        }
+
+        // LOAD DASHBOARD DATA
+        function loadDashboardData() {
+            if (typeof google !== 'undefined' && google.script) {
+                google.script.run
+                    .withSuccessHandler(renderDashboard)
+                    .getDashboardData();
+            } else {
+                // SIMULASI DATA
+                setTimeout(() => {
+                    renderDashboard({
+                        totalWarga: 145,
+                        saldoKas: 4500000,
+                        pengumuman: "Rapat Rutin Bulanan Hari Minggu Pukul 19.30 WIB di Balai RT.",
+                        mutasi: [
+                            { tgl: '12 Mei 2026', ket: 'Iuran Kas Keluarga Bpk. Andi', jenis: 'Masuk', nom: 50000 },
+                            { tgl: '10 Mei 2026', ket: 'Iuran Kas Keluarga Ibu Siti', jenis: 'Masuk', nom: 50000 },
+                            { tgl: '08 Mei 2026', ket: 'Beli Lampu Jalan RT', jenis: 'Keluar', nom: 150000 },
+                            { tgl: '05 Mei 2026', ket: 'Iuran Kas Keluarga Bpk. Joko', jenis: 'Masuk', nom: 50000 },
+                        ]
+                    });
+                }, 1000);
+            }
+        }
+
+        function renderDashboard(data) {
+            document.getElementById('stat-warga').innerText = data.totalWarga + " Jiwa";
+            document.getElementById('stat-kas').innerText = formatRupiah(data.saldoKas);
+            document.getElementById('stat-pengumuman').innerText = data.pengumuman;
+
+            const tbody = document.getElementById('table-kas-body');
+            tbody.innerHTML = '';
+            
+            if(data.mutasi && data.mutasi.length > 0) {
+                data.mutasi.forEach(item => {
+                    const isMasuk = item.jenis.toLowerCase() === 'masuk';
+                    const badgeClass = isMasuk ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
+                    const amountClass = isMasuk ? 'text-green-600' : 'text-red-600';
+                    const sign = isMasuk ? '+' : '-';
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 text-slate-500">${item.tgl}</td>
+                            <td class="p-4 font-medium text-slate-800">${item.ket}</td>
+                            <td class="p-4">
+                                <span class="px-2 py-1 rounded-md text-xs font-bold ${badgeClass}">${item.jenis}</span>
+                            </td>
+                            <td class="p-4 text-right font-bold ${amountClass}">${sign} ${formatRupiah(item.nom)}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">Belum ada data transaksi</td></tr>`;
+            }
+        }
+    </script>
+</body>
+</html>
+
+```
