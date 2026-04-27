@@ -16,7 +16,7 @@ function doGet() {
 // Fungsi untuk mengecek kredensial login
 function checkLogin(username, password) {
   try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = SpreadsheetApp.openById(SS_ID);
     const sheetUsers = ss.getSheetByName("Users");
     
     if(!sheetUsers) {
